@@ -20,7 +20,7 @@ const createStudents = async (req, res) => {
       fullName: row.fullName,
       email: row.email,
       gender: row.gender,
-      mobile: row.mobile.toString(),
+      mobile: row.mobile?.toString(),
       // rollNo: row?.rollNo,
       year: { create: row.year?.split(",").map((year) => ({ year })) }, // Assuming years are comma-separated in the Excel sheet
       academicyear: {
