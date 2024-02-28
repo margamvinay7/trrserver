@@ -7,16 +7,19 @@ const login = async (req, res) => {
   const { username, password } = await req.body;
   console.log("use", username, password);
   const secret = "jhdfhuheruhuurehhjldu";
+
   if (username != undefined && password != undefined) {
+    const user = username;
+    const pass = password;
     try {
       const admin = await prisma.admin.findUnique({
         where: {
-          username: username,
+          username: user,
         },
       });
 
       if (admin) {
-        if (admin.password === password) {
+        if (admin.password === pass) {
           console.log("admin authenticated");
           const accessToken = jwt.sign(
             {
@@ -35,7 +38,7 @@ const login = async (req, res) => {
       } else {
         const studentUser = await prisma.student.findUnique({
           where: {
-            id: username,
+            id: user,
           },
         });
 
@@ -43,7 +46,7 @@ const login = async (req, res) => {
           if (!studentUser) {
             res.status(404).send("user not found");
           }
-          if (studentUser.id === password) {
+          if (studentUser.id === pass) {
             console.log("student authenticated");
             const accessToken = jwt.sign(
               {
