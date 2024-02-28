@@ -4,11 +4,11 @@ const prisma = new PrismaClient();
 import jwt from "jsonwebtoken";
 
 const login = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password } = await req.body;
   console.log("use", username, password);
   const secret = "jhdfhuheruhuurehhjldu";
   try {
-    const admin = await prisma.admin.findMany({
+    const admin = await prisma.admin.findUnique({
       where: {
         username: username,
       },
