@@ -8,7 +8,7 @@ const login = async (req, res) => {
   console.log("use", username, password);
   const secret = "jhdfhuheruhuurehhjldu";
   try {
-    const admin = await prisma.admin.findUnique({
+    const admin = await prisma.admin.findMany({
       where: {
         username: username,
       },
