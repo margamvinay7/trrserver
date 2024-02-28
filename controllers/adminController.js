@@ -24,7 +24,7 @@ const getyearAndAcademicyear = async (req, res) => {
     console.log("error", error);
   }
 };
-const getStudenttByYearAndAcademicyear = async (req, res) => {
+const getStudentByYearAndAcademicyear = async (req, res) => {
   const year = req.params.year;
   const academicyear = req.params.academicyear;
   // const { year, academicyear } = req.params;
@@ -274,5 +274,5 @@ export {
   createAttendence,
   getAttendence,
   getyearAndAcademicyear,
-  getStudenttByYearAndAcademicyear,
+  getStudentByYearAndAcademicyear,
 };

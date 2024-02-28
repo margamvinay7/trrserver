@@ -11,6 +11,8 @@ import timetableRoutes from "./routes/timetableRoutes.js";
 import attendenceRoutes from "./routes/attendenceRoutes.js";
 import selectRoutes from "./routes/selectRoutes.js";
 
+import loginRoutes from "./routes/loginRoutes.js";
+
 const app = express();
 const port = process.env.PORT || 5000;
 const prisma = new PrismaClient();
@@ -19,15 +21,16 @@ app.use(
     origin: "*",
   })
 );
-app.use(fileUpload());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload());
 
 // app.get("/", (req, res) => {
 //   res.send("hi vinay");
 // });
 // app.use("/", adminRoutes);
-
+app.use("/login", loginRoutes);
 app.use("/", studentRoutes);
 
 app.use("/result", resultRoutes);

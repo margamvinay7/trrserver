@@ -1,12 +1,18 @@
 generator client {
     provider="prisma-client-js"
-    binaryTargets = ["native", "debian-openssl-1.1.x"]
+    // binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 datasource db {
     provider = "mysql"
     url=env("DATABASE_URL")
-    shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+    // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Admin {
+    
+    username String @unique
+    password String 
 }
 
 model Student {
@@ -16,8 +22,11 @@ model Student {
     email String?
     mobile String?
     gender String?
-    year Year[]
-    academicyear Academicyear[]
+    year String
+    joiningyear String?
+    address String?
+    image Bytes?
+    academicyear String
     Attendence Attendence[]
     Assessment Assessment[]
     password String?
@@ -26,68 +35,7 @@ model Student {
 }
 
 
-model Year {
-    id Int @id @default(autoincrement())
-    year String
-    Student Student @relation(fields: [studentId],references: [id])
-    studentId String
-}
 
-model Academicyear{
-    id Int @id @default(autoincrement())
-    academicyear String
-    Student Student @relation(fields: [studentId],references: [id])
-    studentId String
-
-}
-
-// model Timetable {
-//     id String @id
-//     Monday Monday[]
-//     Tuesday Tuesday[]
-//     Wednesday Wednesday[]
-//     Thursday Thursday[]
-//     Friday Friday[]
-//     Saturday Saturday[]
-    
-// }
-
-// model Monday {
-//     id Int @id @default(autoincrement())
-//     Timetable Timetable @relation(fields: [timetableId],references: [id])
-//     timetableId String
-//     subject String
-// }
-// model Tuesday {
-//     id Int @id @default(autoincrement())
-//     Timetable Timetable @relation(fields: [timetableId],references: [id])
-//     timetableId String
-//     subject String
-// }
-// model Wednesday{
-//     id Int @id @default(autoincrement())
-//     Timetable Timetable @relation(fields: [timetableId],references: [id])
-//     timetableId String
-//     subject String
-// }
-// model Thursday {
-//     id Int @id @default(autoincrement())
-//     Timetable Timetable @relation(fields: [timetableId],references: [id])
-//     timetableId String
-//     subject String
-// }
-// model Friday {
-//     id Int @id @default(autoincrement())
-//     Timetable Timetable @relation(fields: [timetableId],references: [id])
-//     timetableId String
-//     subject String
-// }
-// model Saturday {
-//     id Int @id @default(autoincrement())
-//     Timetable Timetable @relation(fields: [timetableId],references: [id])
-//     timetableId String
-//     subject String
-// }
 
 model Timetable {
     id String @id @default(uuid())
@@ -119,7 +67,9 @@ model Attendence {
 
   Student       Student  @relation(fields: [studentId], references: [id])
   studentId     String
-  date String
+  date DateTime
+  year String?
+  academicyear String?
   Subject Subject[]
 }
 
@@ -129,15 +79,18 @@ model Subject{
     attendenceId String
     time String
     subject String
-    present Boolean @default(true)
+    present Boolean @default(false)
 }
 
 model Assessment{
     id String @id @default(uuid())
     Student       Student  @relation(fields: [studentId], references: [id])
     studentId     String
-    year String
-    academicyear String
+    year String?
+    studentName String?
+    name String?
+    status String?
+    academicyear String?
     assessment String
     AssessmentSubject AssessmentSubject[]
 } 
@@ -148,8 +101,8 @@ model AssessmentSubject{
     Assessment Assessment @relation(fields:[assessmentId],references: [id])
     assessmentId String
     subject String
-    theoryMarks Int
-    practicalMarks Int
+    theoryMarks Int?
+    practicalMarks Int?
 }
 
 
