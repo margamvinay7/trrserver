@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 
 const login = async (req, res) => {
   const { username, password } = req.body;
+  console.log("use", username, password);
   const secret = "jhdfhuheruhuurehhjldu";
   try {
     const admin = await prisma.admin.findUnique({
